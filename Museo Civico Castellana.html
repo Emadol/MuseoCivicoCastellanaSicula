@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museo Civico - Castellana Sicula</title>
+    <style>
+        :root {
+            --color-primary: #8B4513;
+            --color-secondary: #D2691E;
+            --color-accent: #CD853F;
+            --color-light: #FFF8DC;
+            --color-dark: #2C1810;
+            --color-text: #333;
+            --color-border: #D4A574;
+            --color-hover: #A0522D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: linear-gradient(135deg, #FFF8DC 0%, #F5DEB3 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            background-image: url(https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/57/c9/32/entrata-museo-civico.jpg?w=1200&h=-1&s=1);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% 50%;
+            background-size: cover;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background: var(--color-dark);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        nav button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--color-accent);
+            padding: 0.7rem 1.2rem;
+            margin: 0.3rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: var(--color-accent);
+            color: var(--color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(205, 133, 63, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--color-primary);
+        }
+
+        .intro-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .intro-section p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .grid-reperti {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .reperto-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .reperto-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(139, 69, 19, 0.2);
+            border-color: var(--color-accent);
+        }
+
+        .reperto-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f5deb3 0%, #deb887 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .reperto-content {
+            padding: 1.5rem;
+        }
+
+        .reperto-content h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .reperto-content p {
+            color: var(--color-text);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .sezione-title {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--color-accent);
+        }
+
+        .museo-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .museo-info-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--color-accent);
+        }
+
+        .museo-info-box h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .museo-info-box p {
+            margin: 0.5rem 0;
+            color: var(--color-text);
+        }
+
+        footer {
+            background: var(--color-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 3px solid var(--color-accent);
+        }
+
+        footer h4 {
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        .contatti-link {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contatti-link:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .museo-info {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-reperti {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏛️ Museo Civico</h1>
+        <p>Castellana Sicula - Contrada Muratore</p>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="showSection('home')">Home</button>
+        <button class="nav-btn" onclick="showSection('museo')">Il Museo</button>
+        <button class="nav-btn" onclick="showSection('reperti')">Reperti Archeologici</button>
+        <button class="nav-btn" onclick="showSection('etno')">Collezione Etno-Antropologica</button>
+        <button class="nav-btn" onclick="showSection('contatti')">Contatti</button>
+    </nav>
+
+    <div class="container">
+        <!-- HOME -->
+        <section id="home" class="active">
+            <div class="intro-section">
+                <h2>Benvenuti al Museo Civico di Castellana Sicula</h2>
+                <p>Scopri i tesori archeologici e la ricca collezione etno-antropologica che raccontano la storia millenaria del territorio siciliano.</p>
+                <p>Il museo si trova in <strong>Contrada Muratore</strong>, al di fuori del centro abitato, e rappresenta un'eccellente testimonianza della ricchezza storica locale, dalle origini preistoriche fino all'epoca romana.</p>
+            </div>
+        </section>
+
+        <!-- IL MUSEO -->
+        <section id="museo">
+            <h2 class="sezione-title">Il Museo Civico</h2>
+            
+            <div class="museo-info">
+                <div class="museo-info-box">
+                    <h3>📍 Localizzazione</h3>
+                    <p><strong>Indirizzo:</strong> Contrada Muratore, Castellana Sicula</p>
+                    <p>Il museo è situato nell'ambito dell'area archeologica di Contrada Muratore, dove è stata rinvenuta una necropoli composta da tre ipogei completamente scavati nella roccia.</p>
+                </div>
+
+                <div class="museo-info-box">
+                    <h3>🏛️ La Struttura</h3>
+                    <p>L'edificio che ospita il museo ingloba ancora degli ipogei di epoca tardo romana. La sua storia è affascinante: probabilmente nato come struttura termale, è poi diventato una masseria e successivamente è stato trasformato in frantoio.</p>
+                </div>
+            </div>
+
+            <div class="intro-section">
+                <h3>Due Sezioni Principali:</h3>
+                <p><strong>🎨 Sezione Etno-Antropologica:</strong> Costituita dalla collezione di Padre Abate, donata al Comune. Comprende reperti archeologici, oggetti e strumenti di lavoro testimonanza della locale cultura contadina e una singolare raccolta di animali impagliati.</p>
+                <p><strong>🏺 Sezione Archeologica:</strong> Espone reperti rinvenuti negli scavi condotti in Contrada Muratore e altre aree, attestanti l'antichità dell'insediamento umano risalente alla Preistoria.</p>
+            </div>
+
+            <div class="intro-section" style="margin-top: 2rem;">
+                <h3>Scavi Archeologici Moderni</h3>
+                <p>Nel 2001 l'Archeologo Valentino e nel 2004 l'Archeologo Fontana, in collaborazione con la Soprintendenza Beni Culturali di Palermo, hanno avviato due campagne di scavi che portarono alla luce una zona abitata e un'area pubblica di un probabile pagus di età romana imperiale.</p>
+                <p>Sono stati rinvenuti numerosissimi reperti: <strong>anfore, brocche, lucerne paleocristiane, monete in bronzo e frammenti ceramici a vernice nera</strong>.</p>
+                <p>È stato inoltre rinvenuto un impianto termale polilobato, con una serie di vani che ruotano attorno a una piccola corte interna, caratterizzati da un piano lastricato di ottima fattura.</p>
+            </div>
+        </section>
+
+        <!-- REPERTI ARCHEOLOGICI -->
+        <section id="reperti">
+            <h2 class="sezione-title">Reperti Archeologici</h2>
+            
+            <div class="grid-reperti">
+                <!-- Anfora Africana -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/w557fAT.jpeg" alt="Anfora africana" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Anfora Africana</h3>
+                        <p>Recipiente ceramico pensato per il trasporto e la conservazione di liquidi o farinacei. Prodotte in Africa nord-occidentale, servivano nel flusso commerciale tra Africa e Mediterraneo dall'epoca punica fino al tardo impero. Trasportavano olio d'oliva, vino, pesce conservato e cereali lungo rotte marittime e fluviali.</p>
+                    </div>
+                </div>
+
+                <!-- Fuseruola -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/CKIHSWJ.jpeg" alt="Fuseruola" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Fuseruola</h3>
+                        <p>Piccolo disco di terracotta forato al centro, utilizzato come contrappeso su un fuso per trasformare fibre in filo. Stabilizzava il movimento rotatorio durante la filatura. Il filo veniva ottenuto da fibre vegetali (lino, ortica) o animali (lana di pecora e capra), successivamente utilizzato per tessere le stoffe.</p>
+                    </div>
+                </div>
+
+                <!-- Catino Invetriato -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/9r5Y4cg.jpeg" alt="Catino invetriato" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Catino Invetriato</h3>
+                        <p>Contenitore-bacinella ceramico di forma tonda o a beuta, rivestito internamente ed esternamente con uno strato vetroso (glassa). L'invetriatura rende la ceramica impermeabile, lucida e spesso colorata (verde, blu, giallo, marrone), migliorandone sia l'estetica che la funzionalità.</p>
+                    </div>
+                </div>
+
+                <!-- Filtro Vinario -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/9L24emG.jpeg" alt="Filtro olio e vino" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Filtro Vinario</h3>
+                        <p>Oggetto ceramico a forma di brocca, coppa o piccolo contenitore, impiegato per trattenere residui durante i travasi o per dosare liquidi filtranti. Essenziale per la lavorazione del vino e dell'olio nelle antiche pratiche di conservazione e trasformazione dei prodotti agricoli.</p>
+                    </div>
+                </div>
+
+                <!-- Lucerna Africana -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/dbW7kNt.png" alt="Lucerna africana" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Lucerna Africana</h3>
+                        <p>Contenitore per olio e stoppino, che se acceso veniva utilizzato per illuminare ambienti notturni, fare dei riti o durante viaggi. Forme risalenti a fine IV-VI sec. d.C., rappresentano importanti testimonianze della vita quotidiana nelle comunità paleocristiane dell'epoca.</p>
+                    </div>
+                </div>
+
+                <!-- Ansa Bronzea Configurata -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/CRg6WcZ.jpeg" alt="Ansa bronzea configurata" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Ansa Bronzea Configurata</h3>
+                        <p>Ansa in bronzo che permetteva l'impugnatura, l'aggancio o la sospensione di vasi e contenitori. Può far parte di vasi, corredi di fibule o strumenti vari. Rappresenta l'eccellenza della lavorazione metallurgica antica e la raffinatezza artigianale dell'epoca romana.</p>
+                    </div>
+                </div>
+
+                <!-- Anello Digitale -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/zjLJC9h.jpeg" alt="Anello digitale" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Anello Digitale</h3>
+                        <p>Anello di bronzo sigillo o sigillo-inciso utilizzato per proteggere documenti o come simbolo di stato, famiglia o mestiere. Rappresentava autorità e identità di chi lo indossava, rivestendo un ruolo importante sia sociale che pratico nell'amministrazione romana.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLLEZIONE ETNO-ANTROPOLOGICA -->
+        <section id="etno">
+            <h2 class="sezione-title">Collezione Etno-Antropologica</h2>
+            <p class="intro-section" style="text-align: center; font-style: italic;">Collezione di Padre Abate, donata al Comune di Castellana Sicula</p>
+
+            <div class="grid-reperti">
+                <!-- Tigre Imbalsamata -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/EMawSkV.jpeg" alt="Tigre imbalsamata" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Tigre Imbalsamata</h3>
+                        <p>Parte della vasta collezione etno-antropologica dell'ex Parroco di Castellana Sicula, Padre Abate. Questo esemplare di tigre imbalsamata rappresenta uno dei pezzi più affascinanti della collezione, testimonianza della curiosità e passione collezionistica del nostro parroco.</p>
+                    </div>
+                </div>
+
+                <!-- Macchina per Gazzosa -->
+                <div class="reperto-card">
+                    <img src="https://i.imgur.com/g0vBpvx.png" alt="Gazosa piccala francese" class="reperto-image">
+                    <div class="reperto-content">
+                        <h3>Macchina per Gazzosa - Piccala Francese</h3>
+                        <p>Macchina utilizzata dai paesani del luogo per produrre la gazzosa. Questo strumento rappresenta la cultura popolare e le tradizioni locali di Castellana Sicula, riflettendo le innovazioni e le abitudini quotidiane della comunità nel corso dei decenni.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-section" style="margin-top: 2rem;">
+                <h3>Sulla Collezione</h3>
+                <p>La collezione etno-antropologica comprende:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>Reperti archeologici di provenienza varia</strong></li>
+                    <li><strong>Oggetti e strumenti di lavoro</strong> testimonianza della locale cultura contadina</li>
+                    <li><strong>Una singolare raccolta di animali impagliati e in formalina</strong></li>
+                </ul>
+                <p style="margin-top: 1rem;">Questa raccolta rappresenta un prezioso documento della vita quotidiana, delle tradizioni e della storia naturale del territorio castellanese.</p>
+            </div>
+        </section>
+
+        <!-- CONTATTI -->
+        <section id="contatti">
+            <h2 class="sezione-title">Contatti e Informazioni</h2>
+
+            <div class="museo-info">
+                <div class="museo-info-box">
+                    <h3>📞 Contatti</h3>
+                    <p><strong>Telefono:</strong> <a href="tel:3345420412" class="contatti-link">334 5420412</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:protocollo@pec.comune.castellana-sicula.pa.it" class="contatti-link">protocollo@pec.comune.castellana-sicula.pa.it</a></p>
+                </div>
+
+                <div class="museo-info-box">
+                    <h3>🕐 Orari e Accesso</h3>
+                    <p><strong>Ubicazione:</strong> Contrada Muratore, Castellana Sicula</p>
+                    <p>Situato al di fuori del centro abitato</p>
+                    <p>Per informazioni su orari di apertura, contattare il numero indicato.</p>
+                </div>
+            </div>
+
+            <div class="intro-section" style="margin-top: 2rem;">
+                <h3>Il Territorio di Castellana Sicula</h3>
+                <p>Il museo è una finestra privilegiata sulla storia del territorio castellanese. I reperti provengono da ricognizioni archeologiche effettuate su diverse aree significative:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>Cozzo del Morto</strong></li>
+                    <li><strong>Cozzo Zara</strong></li>
+                    <li><strong>Monte Rotola Vecchia</strong></li>
+                    <li><strong>Cozzo Re</strong></li>
+                </ul>
+                <p style="margin-top: 1rem;">Questi siti attestano l'antichità dell'insediamento umano nel territorio, risalente addirittura alla Preistoria.</p>
+            </div>
+
+            <div class="intro-section" style="margin-top: 2rem; text-align: center; background: linear-gradient(135deg, #FFF8DC 0%, #F5DEB3 100%);">
+                <p style="font-size: 1.1rem; color: var(--color-primary); font-weight: bold;">Grazie per la visita!</p>
+                <p>Scopri la ricchezza storica e culturale di Castellana Sicula visitando il Museo Civico</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <h4>Museo Civico - Castellana Sicula</h4>
+        <p>Contrada Muratore | Castellana Sicula (PA)</p>
+        <p>Telefono: <span class="contatti-link">334 5420412</span></p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">© 2025 Museo Civico. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Nascondi tutte le sezioni
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostra la sezione selezionata
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+
+            // Aggiorna i bottoni attivi
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Scroll in alto
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Gestione responsive del menu
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    // Su mobile, scroll un po' giù per mostrare il contenuto
+                    setTimeout(() => {
+                        document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

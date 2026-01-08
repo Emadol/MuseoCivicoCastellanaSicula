@@ -204,8 +204,12 @@
             margin-bottom: 2rem;
         }
         .museo-info2 {
-            display: inline-block;
-            max-width: 100%;
+              display: grid;/* La magia responsive avviene qui */
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 1rem; /* Spaziatura tra i div */
+              width: 100%; /* Si adatta alla pagina */
+           /* display: inline-block;
+            max-width: 100%;*/
         }
 
         .museo-info-box {
